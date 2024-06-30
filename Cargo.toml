@@ -2,6 +2,15 @@
 name = "openalex"
 version = "0.1.0"
 edition = "2021"
+authors = ["Niklas Frondorf <niklas@frondorf.eu>"]
+readme = "README.md"
+license = "MIT OR Apache-2.0"
+description = "A rust module to to access metadata from openalex.org"
+repository = "https://github.com/0x6e66/openalex"
+homepage = "https://github.com/0x6e66/openalex"
+include = ["src", "Cargo.toml", "README.md"]
+keywords = ["publication-database", "openalex", "scholar"]
+documentation = "https://docs.rs/openalex/"
 
 [dependencies]
 reqwest = { version = "0.12.5", features = ["blocking", "json"] }
