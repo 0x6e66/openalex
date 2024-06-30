@@ -4,6 +4,8 @@ use std::collections::HashMap;
 
 use crate::prelude::*;
 
+use super::Meta;
+
 const API_URL: &str = "https://api.openalex.org/works";
 
 #[derive(Deserialize, Serialize, Debug)]
@@ -147,21 +149,6 @@ pub struct CitedByPercentileYear {
 }
 
 #[derive(Deserialize, Serialize, Debug)]
-pub struct Meta {
-    pub count: u32,
-    pub db_response_time_ms: u32,
-    pub page: u32,
-    pub per_page: u32,
-    pub groups_count: Option<u32>,
-}
-
-#[derive(Deserialize, Serialize, Debug)]
-pub struct ApiResponse {
-    pub meta: Meta,
-    pub results: Vec<Work>,
-}
-
-#[derive(Deserialize, Serialize, Debug)]
 pub struct Work {
     pub id: String,
     pub doi: Option<String>,
@@ -215,6 +202,12 @@ pub struct Work {
     pub created_date: String,
 }
 
+#[derive(Deserialize, Serialize, Debug)]
+pub struct WorkResponse {
+    meta: Meta,
+    results: Vec<Work>,
+}
+
 impl TryFrom<reqwest::blocking::Response> for Work {
     type Error = Error;
 
@@ -231,7 +224,7 @@ impl TryFrom<reqwest::blocking::Response> for Work {
     }
 }
 
-impl TryFrom<reqwest::blocking::Response> for ApiResponse {
+impl TryFrom<reqwest::blocking::Response> for WorkResponse {
     type Error = Error;
 
     fn try_from(response: reqwest::blocking::Response) -> Result<Self> {
@@ -254,7 +247,7 @@ impl Work {
         response.try_into()
     }
 
-    pub fn get_samples(number_of_samples: u32, seed: u32) -> Result<ApiResponse> {
+    pub fn get_samples(number_of_samples: u32, seed: u32) -> Result<WorkResponse> {
         let client = Client::new();
         let response = client
             .get(API_URL)
