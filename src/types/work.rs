@@ -247,11 +247,11 @@ impl Work {
         response.try_into()
     }
 
-    pub fn get_samples(number_of_samples: u32, seed: u32) -> Result<WorkResponse> {
+    pub fn get_samples(number_of_samples: u32, seed: impl Into<String>) -> Result<WorkResponse> {
         let client = Client::new();
         let response = client
             .get(API_URL)
-            .query(&[("sample", number_of_samples), ("seed", seed)])
+            .query(&[("sample", number_of_samples.to_string()), ("seed", seed.into())])
             .send()?;
         response.try_into()
     }
