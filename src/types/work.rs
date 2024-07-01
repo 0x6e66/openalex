@@ -4,12 +4,12 @@ use std::collections::HashMap;
 
 use crate::prelude::*;
 
-use super::Meta;
+use super::common_types::{DehydratedAuthor, Field, Meta};
 
 const API_URL: &str = "https://api.openalex.org/works";
 
 #[derive(Deserialize, Serialize, Debug)]
-pub struct Ids {
+pub struct WorkIds {
     pub openalex: String,
     pub doi: Option<String>,
     pub mag: Option<String>,
@@ -49,13 +49,6 @@ pub struct OpenAccess {
 }
 
 #[derive(Deserialize, Serialize, Debug)]
-pub struct Author {
-    pub id: String,
-    pub display_name: String,
-    pub orcid: Option<String>,
-}
-
-#[derive(Deserialize, Serialize, Debug)]
 pub struct Institution {
     pub id: String,
     pub display_name: String,
@@ -68,7 +61,7 @@ pub struct Institution {
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Authorship {
     pub author_position: String,
-    pub author: Author,
+    pub author: DehydratedAuthor,
     pub institutions: Vec<Institution>,
 }
 
@@ -89,13 +82,7 @@ pub struct Biblio {
 }
 
 #[derive(Deserialize, Serialize, Debug)]
-pub struct Field {
-    pub id: String,
-    pub display_name: String,
-}
-
-#[derive(Deserialize, Serialize, Debug)]
-pub struct Topic {
+pub struct WorkTopic {
     pub id: String,
     pub display_name: String,
     pub score: f32,
@@ -158,7 +145,7 @@ pub struct Work {
     // TODO: Maybe use chrono::datetime
     // ISO 8601 formatted
     pub publication_date: String,
-    pub ids: Ids,
+    pub ids: WorkIds,
     pub language: Option<String>,
     pub primary_location: Option<Location>,
     #[serde(rename = "type")]
@@ -179,8 +166,8 @@ pub struct Work {
     pub biblio: Biblio,
     pub is_retracted: bool,
     pub is_paratext: bool,
-    pub primary_topic: Option<Topic>,
-    pub topics: Vec<Topic>,
+    pub primary_topic: Option<WorkTopic>,
+    pub topics: Vec<WorkTopic>,
     pub keywords: Vec<Keyword>,
     pub concepts: Vec<Concept>,
     pub mesh: Vec<MeshTag>,
