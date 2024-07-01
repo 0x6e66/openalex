@@ -251,7 +251,10 @@ impl Work {
         let client = Client::new();
         let response = client
             .get(API_URL)
-            .query(&[("sample", number_of_samples.to_string()), ("seed", seed.into())])
+            .query(&[
+                ("sample", number_of_samples.to_string()),
+                ("seed", seed.into()),
+            ])
             .send()?;
         response.try_into()
     }

@@ -10,4 +10,3 @@ pub struct Meta {
     pub per_page: u32,
     pub groups_count: Option<u32>,
 }
-
