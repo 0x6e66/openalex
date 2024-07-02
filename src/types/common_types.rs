@@ -1,4 +1,5 @@
-use serde::{Deserialize, Serialize};
+use serde_derive::{Deserialize, Serialize};
+
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Field {

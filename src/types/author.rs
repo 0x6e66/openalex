@@ -1,5 +1,5 @@
 use reqwest::blocking::Client;
-use serde::{Deserialize, Serialize};
+use serde_derive::{Deserialize, Serialize};
 
 use crate::prelude::*;
 
