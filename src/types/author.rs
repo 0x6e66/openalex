@@ -14,31 +14,31 @@ const API_URL: &str = "https://api.openalex.org/authors";
 #[derive(Deserialize, Serialize, Debug)]
 pub struct SummaryStats {
     #[serde(rename = "2yr_mean_citedness")]
-    _2yr_mean_citedness: f32,
-    h_index: u32,
-    i10_index: u32,
+    pub _2yr_mean_citedness: f32,
+    pub h_index: u32,
+    pub i10_index: u32,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct AuthorIds {
-    openalex: String,
-    orcid: Option<String>,
-    scopus: Option<String>,
-    twitter: Option<String>,
-    wikipedia: Option<String>,
+    pub openalex: String,
+    pub orcid: Option<String>,
+    pub scopus: Option<String>,
+    pub twitter: Option<String>,
+    pub wikipedia: Option<String>,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Affiliation {
-    institution: DehydratedInstitution,
-    years: Vec<u32>,
+    pub institution: DehydratedInstitution,
+    pub years: Vec<u32>,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct CountByYear {
-    year: u32,
-    works_count: u32,
-    cited_by_count: u32,
+    pub year: u32,
+    pub works_count: u32,
+    pub cited_by_count: u32,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
@@ -53,29 +53,29 @@ pub struct AuthorTopic {
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Author {
-    affiliations: Vec<Affiliation>,
-    cited_by_count: u32,
-    counts_by_year: Vec<CountByYear>,
+    pub affiliations: Vec<Affiliation>,
+    pub cited_by_count: u32,
+    pub counts_by_year: Vec<CountByYear>,
     // TODO: change for chrono::datatime
-    created_date: String,
-    display_name: String,
-    display_name_alternatives: Vec<String>,
-    id: String,
-    ids: AuthorIds,
-    last_known_institutions: Vec<DehydratedInstitution>,
-    orcid: Option<String>,
-    summary_stats: SummaryStats,
+    pub created_date: String,
+    pub display_name: String,
+    pub display_name_alternatives: Vec<String>,
+    pub id: String,
+    pub ids: AuthorIds,
+    pub last_known_institutions: Vec<DehydratedInstitution>,
+    pub orcid: Option<String>,
+    pub summary_stats: SummaryStats,
     // TODO: change for chrono::datatime
-    topics: Vec<AuthorTopic>,
-    updated_date: String,
-    works_api_url: String,
-    works_count: u32,
+    pub topics: Vec<AuthorTopic>,
+    pub updated_date: String,
+    pub works_api_url: String,
+    pub works_count: u32,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct AuthorResponse {
-    meta: Meta,
-    results: Vec<Author>,
+    pub meta: Meta,
+    pub results: Vec<Author>,
 }
 
 impl TryFrom<reqwest::blocking::Response> for Author {
