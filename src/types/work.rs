@@ -20,7 +20,7 @@ pub struct WorkIds {
 }
 
 #[derive(Deserialize, Serialize, Debug)]
-pub struct Source {
+pub struct WorkSource {
     pub id: String,
     pub display_name: String,
     pub issn_l: Option<String>,
@@ -35,7 +35,7 @@ pub struct Location {
     pub is_oa: bool,
     pub landing_page_url: Option<String>,
     pub pdf_url: Option<String>,
-    pub source: Option<Source>,
+    pub source: Option<WorkSource>,
     pub license: Option<String>,
     pub license_id: Option<String>,
     pub version: Option<String>,
