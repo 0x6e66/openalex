@@ -7,6 +7,21 @@ pub struct Field {
 }
 
 #[derive(Deserialize, Serialize, Debug)]
+pub struct CountByYear {
+    pub year: u32,
+    pub works_count: u32,
+    pub cited_by_count: u32,
+}
+
+#[derive(Deserialize, Serialize, Debug)]
+pub struct SummaryStats {
+    #[serde(rename = "2yr_mean_citedness")]
+    pub _2yr_mean_citedness: f32,
+    pub h_index: u32,
+    pub i10_index: u32,
+}
+
+#[derive(Deserialize, Serialize, Debug)]
 pub struct Meta {
     pub count: u32,
     pub db_response_time_ms: u32,

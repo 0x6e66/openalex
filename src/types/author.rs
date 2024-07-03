@@ -4,20 +4,12 @@ use serde_derive::{Deserialize, Serialize};
 use crate::{error::OpenAlexError, prelude::*};
 
 use super::{
-    common_types::{DehydratedInstitution, Field, Meta},
+    common_types::{CountByYear, DehydratedInstitution, Field, Meta, SummaryStats},
     filter::Filter,
     sort::Sort,
 };
 
 const API_URL: &str = "https://api.openalex.org/authors";
-
-#[derive(Deserialize, Serialize, Debug)]
-pub struct SummaryStats {
-    #[serde(rename = "2yr_mean_citedness")]
-    pub _2yr_mean_citedness: f32,
-    pub h_index: u32,
-    pub i10_index: u32,
-}
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct AuthorIds {
@@ -32,13 +24,6 @@ pub struct AuthorIds {
 pub struct Affiliation {
     pub institution: DehydratedInstitution,
     pub years: Vec<u32>,
-}
-
-#[derive(Deserialize, Serialize, Debug)]
-pub struct CountByYear {
-    pub year: u32,
-    pub works_count: u32,
-    pub cited_by_count: u32,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
