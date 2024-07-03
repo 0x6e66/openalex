@@ -1,8 +1,8 @@
-use reqwest::{blocking::Client, StatusCode};
+use reqwest::blocking::Client;
 use serde_derive::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-use crate::{error::OpenAlexError, prelude::*};
+use crate::{impl_try_from_for_entity_response, impl_try_from_for_single_entity, prelude::*};
 
 use super::{
     common_types::{DehydratedAuthor, Field, Meta},
@@ -199,69 +199,8 @@ pub struct WorkResponse {
     results: Vec<Work>,
 }
 
-impl TryFrom<reqwest::blocking::Response> for Work {
-    type Error = Error;
-
-    fn try_from(response: reqwest::blocking::Response) -> Result<Self> {
-        match response.status() {
-            StatusCode::OK => {
-                let res = response.json::<Self>();
-                match res {
-                    Ok(work) => Ok(work),
-                    Err(e) => Err(Error::Generic(format!(
-                        "Error deserializing Work object. Original Message: {}",
-                        e
-                    ))),
-                }
-            }
-            StatusCode::NOT_FOUND => {
-                let oa_error = OpenAlexError {
-                    error: "Document not found".to_string(),
-                    message: "The document with the specified id was not found. HTTP 404"
-                        .to_string(),
-                };
-                Err(Error::OpenAlex(oa_error))
-            }
-            _ => Err(Error::Generic(format!(
-                "Unknown Error. Response Code was {}",
-                response.status()
-            ))),
-        }
-    }
-}
-
-impl TryFrom<reqwest::blocking::Response> for WorkResponse {
-    type Error = Error;
-
-    fn try_from(response: reqwest::blocking::Response) -> Result<Self> {
-        match response.status() {
-            StatusCode::OK => {
-                let res = response.json::<Self>();
-                match res {
-                    Ok(work_response) => Ok(work_response),
-                    Err(e) => Err(Error::Generic(format!(
-                        "Error deserializing Work object. Original Message: {}",
-                        e
-                    ))),
-                }
-            }
-            StatusCode::FORBIDDEN => {
-                let res = response.json::<OpenAlexError>();
-                match res {
-                    Ok(oa_error) => Err(Error::OpenAlex(oa_error)),
-                    Err(e) => Err(Error::Generic(format!(
-                        "Error deserializing OpenAlexError object. Original Message: {}",
-                        e
-                    ))),
-                }
-            }
-            _ => Err(Error::Generic(format!(
-                "Unknown Error. Response Code was {}",
-                response.status()
-            ))),
-        }
-    }
-}
+impl_try_from_for_single_entity!(Work);
+impl_try_from_for_entity_response!(WorkResponse);
 
 impl Work {
     pub fn new(id: &str) -> Result<Self> {
