@@ -18,12 +18,12 @@ pub struct APCPrice {
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct SourceIds {
-    pub fatcat: String,
-    pub issn: Vec<String>,
-    pub issn_l: String,
-    pub mag: u32,
+    pub fatcat: Option<String>,
+    pub issn: Option<Vec<String>>,
+    pub issn_l: Option<String>,
+    pub mag: Option<String>,
     pub openalex: String,
-    pub wikidata: String,
+    pub wikidata: Option<String>,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
@@ -34,26 +34,26 @@ pub struct Society {
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Source {
-    pub abbreviated_title: String,
-    pub alternate_titles: Vec<String>,
-    pub apc_prices: Vec<APCPrice>,
-    pub apc_usd: u32,
+    pub abbreviated_title: Option<String>,
+    pub alternate_titles: Option<Vec<String>>,
+    pub apc_prices: Option<Vec<APCPrice>>,
+    pub apc_usd: Option<u32>,
     pub cited_by_count: u32,
-    pub country_code: String,
+    pub country_code: Option<String>,
     pub counts_by_year: Vec<CountByYear>,
     pub created_date: String,
     pub display_name: String,
-    pub homepage_url: String,
-    pub host_organization: String,
+    pub homepage_url: Option<String>,
+    pub host_organization: Option<String>,
     pub host_organization_lineage: Vec<String>,
-    pub host_organization_name: String,
+    pub host_organization_name: Option<String>,
     pub id: String,
     pub ids: SourceIds,
     pub is_in_doaj: bool,
     pub is_oa: bool,
-    pub issn: Vec<String>,
-    pub issn_l: String,
-    pub societies: Vec<Society>,
+    pub issn: Option<Vec<String>>,
+    pub issn_l: Option<String>,
+    pub societies: Option<Vec<Society>>,
     pub summary_stats: SummaryStats,
     #[serde(rename = "type")]
     pub source_type: String,
