@@ -2,9 +2,9 @@ pub struct Sort {
     inner: String,
 }
 
-impl ToString for Sort {
-    fn to_string(&self) -> String {
-        self.inner.to_owned()
+impl std::fmt::Display for Sort {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.inner)
     }
 }
 
