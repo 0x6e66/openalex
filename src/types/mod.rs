@@ -2,8 +2,13 @@ pub mod author;
 pub mod common_types;
 pub mod filter;
 pub mod sort;
-pub mod work;
 pub mod source;
+pub mod work;
+
+use crate::prelude::*;
+use filter::Filter;
+use reqwest::blocking::Response;
+use sort::Sort;
 
 #[macro_export]
 macro_rules! impl_try_from_for_single_entity {
@@ -77,4 +82,22 @@ macro_rules! impl_try_from_for_entity_response {
             }
         }
     };
+}
+
+pub trait APIEntity<EntityType, ResponseType>
+where
+    ResponseType: TryFrom<Response>,
+    EntityType: TryFrom<Response>,
+{
+    const API_URL: &'static str;
+
+    fn new(id: &str) -> Result<EntityType>;
+    fn get_samples(number_of_samples: u32, seed: impl Into<String>) -> Result<ResponseType>;
+    fn filter(filter: Filter, page: u32, per_page: u32, sort: Sort) -> Result<ResponseType>;
+    fn search(
+        search: impl Into<String>,
+        page: u32,
+        per_page: u32,
+        sort: Sort,
+    ) -> Result<ResponseType>;
 }

@@ -1,4 +1,4 @@
-use openalex::types::{author::Author, filter::Filter, sort::Sort};
+use openalex::types::{author::Author, filter::Filter, sort::Sort, APIEntity};
 
 pub fn main() {
     let _author = Author::new("5010062957").unwrap();
@@ -12,6 +12,13 @@ pub fn main() {
         1,
         20,
         Sort::builder().add_sort("cited_by_count", "desc").build(),
+    )
+    .unwrap();
+    let _author_response = Author::search(
+        "machine learning",
+        1,
+        20,
+        Sort::builder().add_sort("publication_year", "desc").build(),
     )
     .unwrap();
 }

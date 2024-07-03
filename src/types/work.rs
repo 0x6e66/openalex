@@ -8,9 +8,8 @@ use super::{
     common_types::{DehydratedAuthor, Field, Meta},
     filter::Filter,
     sort::Sort,
+    APIEntity,
 };
-
-const API_URL: &str = "https://api.openalex.org/works";
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct WorkIds {
@@ -195,24 +194,26 @@ pub struct Work {
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct WorkResponse {
-    meta: Meta,
-    results: Vec<Work>,
+    pub meta: Meta,
+    pub results: Vec<Work>,
 }
 
 impl_try_from_for_single_entity!(Work);
 impl_try_from_for_entity_response!(WorkResponse);
 
-impl Work {
-    pub fn new(id: &str) -> Result<Self> {
-        let url = format!("{}/W{}", API_URL, id);
+impl APIEntity<Work, WorkResponse> for Work {
+    const API_URL: &'static str = "https://api.openalex.org/works";
+
+    fn new(id: &str) -> Result<Work> {
+        let url = format!("{}/W{}", Self::API_URL, id);
         let response = reqwest::blocking::get(url)?;
         response.try_into()
     }
 
-    pub fn get_samples(number_of_samples: u32, seed: impl Into<String>) -> Result<WorkResponse> {
+    fn get_samples(number_of_samples: u32, seed: impl Into<String>) -> Result<WorkResponse> {
         let client = Client::new();
         let response = client
-            .get(API_URL)
+            .get(Self::API_URL)
             .query(&[
                 ("sample", number_of_samples.to_string()),
                 ("seed", seed.into()),
@@ -221,12 +222,32 @@ impl Work {
         response.try_into()
     }
 
-    pub fn filter(filter: Filter, page: u32, per_page: u32, sort: Sort) -> Result<WorkResponse> {
+    fn filter(filter: Filter, page: u32, per_page: u32, sort: Sort) -> Result<WorkResponse> {
         let client = Client::new();
         let response = client
-            .get(API_URL)
+            .get(Self::API_URL)
             .query(&[
                 ("filter", filter.to_string()),
+                ("page", page.to_string()),
+                ("per-page", per_page.to_string()),
+                ("sort", sort.to_string()),
+            ])
+            .send()?;
+
+        response.try_into()
+    }
+
+    fn search(
+        search: impl Into<String>,
+        page: u32,
+        per_page: u32,
+        sort: Sort,
+    ) -> Result<WorkResponse> {
+        let client = Client::new();
+        let response = client
+            .get(Self::API_URL)
+            .query(&[
+                ("search", search.into()),
                 ("page", page.to_string()),
                 ("per-page", per_page.to_string()),
                 ("sort", sort.to_string()),

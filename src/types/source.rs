@@ -1,8 +1,14 @@
+use reqwest::blocking::Client;
 use serde_derive::{Deserialize, Serialize};
 
-use crate::{impl_try_from_for_entity_response, impl_try_from_for_single_entity};
+use crate::{impl_try_from_for_entity_response, impl_try_from_for_single_entity, prelude::*};
 
-use super::common_types::{CountByYear, Meta, SummaryStats};
+use super::{
+    common_types::{CountByYear, Meta, SummaryStats},
+    filter::Filter,
+    sort::Sort,
+    APIEntity,
+};
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct APCPrice {
@@ -64,3 +70,60 @@ pub struct SourceResponse {
 
 impl_try_from_for_single_entity!(Source);
 impl_try_from_for_entity_response!(SourceResponse);
+
+impl APIEntity<Source, SourceResponse> for Source {
+    const API_URL: &'static str = "https://api.openalex.org/sources";
+
+    fn new(id: &str) -> Result<Source> {
+        let url = format!("{}/W{}", Self::API_URL, id);
+        let response = reqwest::blocking::get(url)?;
+        response.try_into()
+    }
+
+    fn get_samples(number_of_samples: u32, seed: impl Into<String>) -> Result<SourceResponse> {
+        let client = Client::new();
+        let response = client
+            .get(Self::API_URL)
+            .query(&[
+                ("sample", number_of_samples.to_string()),
+                ("seed", seed.into()),
+            ])
+            .send()?;
+        response.try_into()
+    }
+
+    fn filter(filter: Filter, page: u32, per_page: u32, sort: Sort) -> Result<SourceResponse> {
+        let client = Client::new();
+        let response = client
+            .get(Self::API_URL)
+            .query(&[
+                ("filter", filter.to_string()),
+                ("page", page.to_string()),
+                ("per-page", per_page.to_string()),
+                ("sort", sort.to_string()),
+            ])
+            .send()?;
+
+        response.try_into()
+    }
+
+    fn search(
+        search: impl Into<String>,
+        page: u32,
+        per_page: u32,
+        sort: Sort,
+    ) -> Result<SourceResponse> {
+        let client = Client::new();
+        let response = client
+            .get(Self::API_URL)
+            .query(&[
+                ("search", search.into()),
+                ("page", page.to_string()),
+                ("per-page", per_page.to_string()),
+                ("sort", sort.to_string()),
+            ])
+            .send()?;
+
+        response.try_into()
+    }
+}

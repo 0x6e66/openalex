@@ -1,5 +1,5 @@
 use openalex::{
-    types::{filter::Filter, sort::Sort},
+    types::{filter::Filter, sort::Sort, APIEntity},
     Work,
 };
 
@@ -12,6 +12,13 @@ pub fn main() {
             .and()
             .add_filter("institutions.country_code", "gb")
             .build(),
+        1,
+        20,
+        Sort::builder().add_sort("publication_year", "desc").build(),
+    )
+    .unwrap();
+    let _works_response = Work::search(
+        "machine learning",
         1,
         20,
         Sort::builder().add_sort("publication_year", "desc").build(),
