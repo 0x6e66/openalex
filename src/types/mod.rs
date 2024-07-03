@@ -91,6 +91,7 @@ where
 {
     const API_URL: &'static str;
 
+    #[allow(clippy::new_ret_no_self)]
     fn new(id: &str) -> Result<EntityType>;
     fn get_samples(number_of_samples: u32, seed: impl Into<String>) -> Result<ResponseType>;
     fn filter(filter: Filter, page: u32, per_page: u32, sort: Sort) -> Result<ResponseType>;
