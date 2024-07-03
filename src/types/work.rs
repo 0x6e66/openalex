@@ -1,8 +1,8 @@
-use reqwest::blocking::Client;
+use reqwest::{blocking::Client, StatusCode};
 use serde_derive::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-use crate::prelude::*;
+use crate::{error::OpenAlexError, prelude::*};
 
 use super::{
     common_types::{DehydratedAuthor, Field, Meta},
@@ -203,15 +203,30 @@ impl TryFrom<reqwest::blocking::Response> for Work {
     type Error = Error;
 
     fn try_from(response: reqwest::blocking::Response) -> Result<Self> {
-        if !response.status().is_success() {
-            return Err(Error::OpenAlex(format!(
-                "HTTP Response code was '{}'",
+        match response.status() {
+            StatusCode::OK => {
+                let res = response.json::<Self>();
+                match res {
+                    Ok(work) => Ok(work),
+                    Err(e) => Err(Error::Generic(format!(
+                        "Error deserializing Work object. Original Message: {}",
+                        e
+                    ))),
+                }
+            }
+            StatusCode::NOT_FOUND => {
+                let oa_error = OpenAlexError {
+                    error: "Document not found".to_string(),
+                    message: "The document with the specified id was not found. HTTP 404"
+                        .to_string(),
+                };
+                Err(Error::OpenAlex(oa_error))
+            }
+            _ => Err(Error::Generic(format!(
+                "Unknown Error. Response Code was {}",
                 response.status()
-            )));
+            ))),
         }
-
-        let work = response.json::<Self>()?;
-        Ok(work)
     }
 }
 
@@ -219,15 +234,32 @@ impl TryFrom<reqwest::blocking::Response> for WorkResponse {
     type Error = Error;
 
     fn try_from(response: reqwest::blocking::Response) -> Result<Self> {
-        if !response.status().is_success() {
-            return Err(Error::OpenAlex(format!(
-                "HTTP Response code was '{}'",
+        match response.status() {
+            StatusCode::OK => {
+                let res = response.json::<Self>();
+                match res {
+                    Ok(work_response) => Ok(work_response),
+                    Err(e) => Err(Error::Generic(format!(
+                        "Error deserializing Work object. Original Message: {}",
+                        e
+                    ))),
+                }
+            }
+            StatusCode::FORBIDDEN => {
+                let res = response.json::<OpenAlexError>();
+                match res {
+                    Ok(oa_error) => Err(Error::OpenAlex(oa_error)),
+                    Err(e) => Err(Error::Generic(format!(
+                        "Error deserializing OpenAlexError object. Original Message: {}",
+                        e
+                    ))),
+                }
+            }
+            _ => Err(Error::Generic(format!(
+                "Unknown Error. Response Code was {}",
                 response.status()
-            )));
+            ))),
         }
-
-        let response = response.json::<Self>()?;
-        Ok(response)
     }
 }
 
