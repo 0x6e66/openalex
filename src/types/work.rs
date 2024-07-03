@@ -4,7 +4,11 @@ use std::collections::HashMap;
 
 use crate::prelude::*;
 
-use super::common_types::{DehydratedAuthor, Field, Meta};
+use super::{
+    common_types::{DehydratedAuthor, Field, Meta},
+    filter::Filter,
+    sort::Sort,
+};
 
 const API_URL: &str = "https://api.openalex.org/works";
 
@@ -243,6 +247,21 @@ impl Work {
                 ("seed", seed.into()),
             ])
             .send()?;
+        response.try_into()
+    }
+
+    pub fn filter(filter: Filter, page: u32, per_page: u32, sort: Sort) -> Result<WorkResponse> {
+        let client = Client::new();
+        let response = client
+            .get(API_URL)
+            .query(&[
+                ("filter", filter.to_string()),
+                ("page", page.to_string()),
+                ("per-page", per_page.to_string()),
+                ("sort", sort.to_string()),
+            ])
+            .send()?;
+
         response.try_into()
     }
 }
