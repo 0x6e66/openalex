@@ -18,7 +18,7 @@ pub fn main() {
         "machine learning",
         1,
         20,
-        Sort::builder().add_sort("publication_year", "desc").build(),
+        Sort::builder().add_sort("cited_by_count", "desc").build(),
     )
     .unwrap();
 }
