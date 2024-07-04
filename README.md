@@ -7,4 +7,5 @@
 ## Description
 This crate aims to provide interoperability between rust and the open publication database [OpenAlex](https://docs.openalex.org/). Currently these [OpenAlex API entities](https://docs.openalex.org/api-entities/entities-overview) are supported:
 - [Works](https://docs.openalex.org/api-entities/works) ([here](./src/types/work.rs))
-- [AUthors](https://docs.openalex.org/api-entities/authors) ([here](./src/types/author.rs))
+- [Authors](https://docs.openalex.org/api-entities/authors) ([here](./src/types/author.rs))
+- [Sources](https://docs.openalex.org/api-entities/sources) ([here](./src/types/source.rs))
