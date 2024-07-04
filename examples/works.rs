@@ -1,10 +1,7 @@
-use openalex::{
-    types::{filter::Filter, sort::Sort, APIEntity},
-    Work,
-};
+use openalex::types::{filter::Filter, sort::Sort, work::Work, APIEntity};
 
 pub fn main() {
-    let _work = Work::new("4251028522").unwrap();
+    let _work = Work::new("W4251028522").unwrap();
     let _works_response = Work::get_samples(20, "1234").unwrap();
     let _works_response = Work::filter(
         Filter::builder()

@@ -1,7 +1,7 @@
 use openalex::types::{filter::Filter, sort::Sort, source::Source, APIEntity};
 
 pub fn main() {
-    let _source = Source::new("137773608").unwrap();
+    let _source = Source::new("S137773608").unwrap();
     let _source_response = Source::get_samples(20, "1234").unwrap();
     let _source_response = Source::filter(
         Filter::builder()

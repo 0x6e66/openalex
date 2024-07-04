@@ -1,7 +1,7 @@
 use openalex::types::{author::Author, filter::Filter, sort::Sort, APIEntity};
 
 pub fn main() {
-    let _author = Author::new("5010062957").unwrap();
+    let _author = Author::new("A5010062957").unwrap();
     let _author_response = Author::get_samples(20, "1234").unwrap();
     let _author_response = Author::filter(
         Filter::builder()

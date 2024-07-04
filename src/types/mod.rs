@@ -5,10 +5,11 @@ pub mod sort;
 pub mod source;
 pub mod work;
 
-use crate::prelude::*;
 use filter::Filter;
-use reqwest::blocking::Response;
+use reqwest::blocking::{Client, Response};
 use sort::Sort;
+
+use crate::prelude::*;
 
 #[macro_export]
 macro_rules! impl_try_from_for_single_entity {
@@ -86,19 +87,59 @@ macro_rules! impl_try_from_for_entity_response {
 
 pub trait APIEntity<EntityType, ResponseType>
 where
-    ResponseType: TryFrom<Response>,
-    EntityType: TryFrom<Response>,
+    EntityType: TryFrom<Response, Error = Error>,
+    ResponseType: TryFrom<Response, Error = Error>,
 {
     const API_URL: &'static str;
 
     #[allow(clippy::new_ret_no_self)]
-    fn new(id: &str) -> Result<EntityType>;
-    fn get_samples(number_of_samples: u32, seed: impl Into<String>) -> Result<ResponseType>;
-    fn filter(filter: Filter, page: u32, per_page: u32, sort: Sort) -> Result<ResponseType>;
+    fn new(id: &str) -> Result<EntityType> {
+        let url = format!("{}/{}", Self::API_URL, id);
+        let response = reqwest::blocking::get(url)?;
+        response.try_into()
+    }
+    fn get_samples(number_of_samples: u32, seed: impl Into<String>) -> Result<ResponseType> {
+        let client = Client::new();
+        let response = client
+            .get(Self::API_URL)
+            .query(&[
+                ("sample", number_of_samples.to_string()),
+                ("seed", seed.into()),
+            ])
+            .send()?;
+        response.try_into()
+    }
+    fn filter(filter: Filter, page: u32, per_page: u32, sort: Sort) -> Result<ResponseType> {
+        let client = Client::new();
+        let response = client
+            .get(Self::API_URL)
+            .query(&[
+                ("filter", filter.to_string()),
+                ("page", page.to_string()),
+                ("per-page", per_page.to_string()),
+                ("sort", sort.to_string()),
+            ])
+            .send()?;
+        response.try_into()
+    }
+
     fn search(
         search: impl Into<String>,
         page: u32,
         per_page: u32,
         sort: Sort,
-    ) -> Result<ResponseType>;
+    ) -> Result<ResponseType> {
+        let client = Client::new();
+        let response = client
+            .get(Self::API_URL)
+            .query(&[
+                ("search", search.into()),
+                ("page", page.to_string()),
+                ("per-page", per_page.to_string()),
+                ("sort", sort.to_string()),
+            ])
+            .send()?;
+
+        response.try_into()
+    }
 }
