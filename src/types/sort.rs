@@ -16,26 +16,19 @@ impl Sort {
 
 #[derive(Default)]
 pub struct SortBuilder {
-    inner: String,
+    inner: Vec<String>,
 }
 
 impl SortBuilder {
     pub fn add_sort(mut self, key: &str, direction: &str) -> SortBuilder {
-        self.inner.push_str(key);
-        self.inner.push(':');
-        self.inner.push_str(direction);
-        self.inner.push(',');
+        self.inner.push(format!("{key}:{direction}"));
         self
     }
 
-    pub fn build(mut self) -> Sort {
-        if let Some(c) = self.inner.chars().last() {
-            if c == ',' {
-                self.inner.remove(self.inner.len() - 1);
-            }
+    pub fn build(self) -> Sort {
+        Sort {
+            inner: self.inner.join(","),
         }
-
-        Sort { inner: self.inner }
     }
 }
 
