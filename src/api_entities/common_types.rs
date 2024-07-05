@@ -22,6 +22,13 @@ pub struct SummaryStats {
 }
 
 #[derive(Deserialize, Serialize, Debug)]
+pub struct Role {
+    pub role: String,
+    pub id: String,
+    pub works_count: u32,
+}
+
+#[derive(Deserialize, Serialize, Debug)]
 pub struct Meta {
     pub count: u32,
     pub db_response_time_ms: u32,

@@ -6,7 +6,7 @@ use crate::{impl_try_from_for_entity_response, impl_try_from_for_single_entity};
 
 use super::{
     common_types::{
-        CountByYear, DehydratedInstitution, DehydratedTopic, DehydratedTopicShare, Meta,
+        CountByYear, DehydratedInstitution, DehydratedTopic, DehydratedTopicShare, Meta, Role,
         SummaryStats,
     },
     APIEntity,
@@ -52,13 +52,6 @@ pub struct Repository {
     pub host_organization: String,
     pub host_organization_name: String,
     pub host_organization_lineage: Vec<String>,
-}
-
-#[derive(Deserialize, Serialize, Debug)]
-pub struct Role {
-    pub role: String,
-    pub id: String,
-    pub works_count: u32,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
