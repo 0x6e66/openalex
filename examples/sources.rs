@@ -1,4 +1,8 @@
-use openalex::types::{filter::Filter, sort::Sort, source::Source, APIEntity};
+use openalex::{
+    api_entities::APIEntity,
+    utils::{filter::Filter, sort::Sort},
+    Source,
+};
 
 pub fn main() {
     let _source = Source::new("S137773608").unwrap();

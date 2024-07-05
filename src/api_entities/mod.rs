@@ -1,16 +1,15 @@
 pub mod author;
 pub mod common_types;
-pub mod filter;
 pub mod institution;
-pub mod sort;
 pub mod source;
 pub mod work;
 
-use filter::Filter;
 use reqwest::blocking::{Client, Response};
-use sort::Sort;
 
-use crate::prelude::*;
+use crate::{
+    prelude::*,
+    utils::{filter::Filter, sort::Sort},
+};
 
 #[macro_export]
 macro_rules! impl_try_from_for_single_entity {

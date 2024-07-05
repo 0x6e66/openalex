@@ -1,5 +1,6 @@
+pub mod api_entities;
 pub mod error;
 pub mod prelude;
-pub mod types;
+pub mod utils;
 
-pub use types::{author::Author, source::Source, work::Work};
+pub use api_entities::{author::Author, institution::Institution, source::Source, work::Work};

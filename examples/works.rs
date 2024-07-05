@@ -1,4 +1,8 @@
-use openalex::types::{filter::Filter, sort::Sort, work::Work, APIEntity};
+use openalex::{
+    api_entities::APIEntity,
+    utils::{filter::Filter, sort::Sort},
+    Work,
+};
 
 pub fn main() {
     let _work = Work::new("W4251028522").unwrap();

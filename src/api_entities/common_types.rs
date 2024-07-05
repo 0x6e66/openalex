@@ -35,7 +35,7 @@ pub struct DehydratedInstitution {
     country_code: String,
     display_name: String,
     id: String,
-    lineage: Vec<String>,
+    lineage: Option<Vec<String>>,
     ror: String,
     #[serde(rename = "type")]
     institution_type: String,

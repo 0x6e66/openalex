@@ -1,4 +1,8 @@
-use openalex::types::{author::Author, filter::Filter, sort::Sort, APIEntity};
+use openalex::{
+    api_entities::APIEntity,
+    utils::{filter::Filter, sort::Sort},
+    Author,
+};
 
 pub fn main() {
     let _author = Author::new("A5010062957").unwrap();

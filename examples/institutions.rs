@@ -1,4 +1,8 @@
-use openalex::types::{filter::Filter, institution::Institution, sort::Sort, APIEntity};
+use openalex::{
+    api_entities::APIEntity,
+    utils::{filter::Filter, sort::Sort},
+    Institution,
+};
 
 pub fn main() {
     let _institution = Institution::new("I4210142603").unwrap();
