@@ -47,3 +47,25 @@ pub struct DehydratedAuthor {
     pub display_name: String,
     pub orcid: Option<String>,
 }
+
+// not from OA, self created
+#[derive(Deserialize, Serialize, Debug)]
+pub struct DehydratedTopic {
+    id: String,
+    display_name: String,
+    count: u32,
+    subfield: Field,
+    field: Field,
+    domain: Field,
+}
+
+// not from OA, self created
+#[derive(Deserialize, Serialize, Debug)]
+pub struct DehydratedTopicShare {
+    id: String,
+    display_name: String,
+    value: f64,
+    subfield: Field,
+    field: Field,
+    domain: Field,
+}

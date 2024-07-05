@@ -4,7 +4,7 @@ use std::collections::HashMap;
 use crate::{impl_try_from_for_entity_response, impl_try_from_for_single_entity};
 
 use super::{
-    common_types::{DehydratedAuthor, Field, Meta},
+    common_types::{DehydratedAuthor, DehydratedInstitution, Field, Meta},
     APIEntity,
 };
 
@@ -49,20 +49,10 @@ pub struct OpenAccess {
 }
 
 #[derive(Deserialize, Serialize, Debug)]
-pub struct Institution {
-    pub id: String,
-    pub display_name: String,
-    pub ror: String,
-    pub country_code: String,
-    #[serde(rename = "type")]
-    pub instituion_type: String,
-}
-
-#[derive(Deserialize, Serialize, Debug)]
 pub struct Authorship {
     pub author_position: String,
     pub author: DehydratedAuthor,
-    pub institutions: Vec<Institution>,
+    pub institutions: Vec<DehydratedInstitution>,
 }
 
 #[derive(Deserialize, Serialize, Debug)]

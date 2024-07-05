@@ -3,7 +3,7 @@ use serde_derive::{Deserialize, Serialize};
 use crate::{impl_try_from_for_entity_response, impl_try_from_for_single_entity};
 
 use super::{
-    common_types::{CountByYear, DehydratedInstitution, Field, Meta, SummaryStats},
+    common_types::{CountByYear, DehydratedInstitution, DehydratedTopic, DehydratedTopicShare, Meta, SummaryStats},
     APIEntity,
 };
 
@@ -23,21 +23,10 @@ pub struct Affiliation {
 }
 
 #[derive(Deserialize, Serialize, Debug)]
-pub struct AuthorTopic {
-    pub id: String,
-    pub display_name: String,
-    pub count: u32,
-    pub subfield: Field,
-    pub field: Field,
-    pub domain: Field,
-}
-
-#[derive(Deserialize, Serialize, Debug)]
 pub struct Author {
     pub affiliations: Vec<Affiliation>,
     pub cited_by_count: u32,
     pub counts_by_year: Vec<CountByYear>,
-    // TODO: change for chrono::datatime
     pub created_date: String,
     pub display_name: String,
     pub display_name_alternatives: Vec<String>,
@@ -46,8 +35,8 @@ pub struct Author {
     pub last_known_institutions: Vec<DehydratedInstitution>,
     pub orcid: Option<String>,
     pub summary_stats: SummaryStats,
-    // TODO: change for chrono::datatime
-    pub topics: Vec<AuthorTopic>,
+    pub topics: Vec<DehydratedTopic>,
+    pub topic_share: Vec<DehydratedTopicShare>,
     pub updated_date: String,
     pub works_api_url: String,
     pub works_count: u32,
