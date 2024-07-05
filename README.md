@@ -9,3 +9,4 @@ This crate aims to provide interoperability between rust and the open publicatio
 - [Works](https://docs.openalex.org/api-entities/works) ([here](./src/types/work.rs))
 - [Authors](https://docs.openalex.org/api-entities/authors) ([here](./src/types/author.rs))
 - [Sources](https://docs.openalex.org/api-entities/sources) ([here](./src/types/source.rs))
+- [Institutions](https://docs.openalex.org/api-entities/institutions) ([here](./src/types/institution.rs))
