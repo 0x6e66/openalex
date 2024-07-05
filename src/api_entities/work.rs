@@ -183,7 +183,7 @@ impl Work {
     pub fn get_abstract(&self) -> String {
         let mut res: Vec<&str> = vec![];
         if let Some(aii) = &self.abstract_inverted_index {
-            for (s, positions) in aii.into_iter() {
+            for (s, positions) in aii.iter() {
                 for pos in positions {
                     while res.len() <= (*pos as usize) {
                         res.push("");
