@@ -44,7 +44,7 @@ pub struct Location {
 pub struct OpenAccess {
     pub is_oa: bool,
     pub oa_status: String,
-    pub oa_url: String,
+    pub oa_url: Option<String>,
     pub any_repository_has_fulltext: bool,
 }
 
@@ -143,7 +143,7 @@ pub struct Work {
     pub created_date: String,
     pub display_name: Option<String>,
     pub doi: Option<String>,
-    pub fulltext_origin: String,
+    pub fulltext_origin: Option<String>,
     pub grants: Vec<Grant>,
     pub has_fulltext: bool,
     pub id: String,
