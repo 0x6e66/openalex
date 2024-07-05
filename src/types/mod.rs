@@ -1,6 +1,7 @@
 pub mod author;
 pub mod common_types;
 pub mod filter;
+pub mod institution;
 pub mod sort;
 pub mod source;
 pub mod work;
@@ -24,7 +25,7 @@ macro_rules! impl_try_from_for_single_entity {
                         match res {
                             Ok(entity) => Ok(entity),
                             Err(e) => Err($crate::error::Error::Generic(format!(
-                                "Error deserializing Work object. Original Message: {}",
+                                "Error deserializing object. Original Message: {}",
                                 e
                             ))),
                         }
