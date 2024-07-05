@@ -1,6 +1,7 @@
 pub mod author;
 pub mod common_types;
 pub mod institution;
+pub mod keyword;
 pub mod source;
 pub mod topic;
 pub mod work;
