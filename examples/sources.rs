@@ -5,9 +5,8 @@ pub fn main() {
     let _source_response = Source::get_samples(20, "1234").unwrap();
     let _source_response = Source::filter(
         Filter::builder()
-            .add_filter("has_issn", "true")
-            .and()
-            .add_filter("continent", "asia")
+            .new("has_issn", "true")
+            .and("continent", "asia")
             .build(),
         1,
         20,

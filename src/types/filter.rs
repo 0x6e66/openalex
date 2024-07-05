@@ -14,46 +14,36 @@ impl Filter {
     }
 }
 
-#[derive(Default, PartialEq)]
-enum LogicalOperations {
-    And,
-    Or,
-    #[default]
-    None,
-}
-
 #[derive(Default)]
 pub struct FilterBuilder {
     inner: String,
-    last_logical_op: LogicalOperations,
 }
 
 impl FilterBuilder {
-    pub fn add_filter(mut self, key: &str, value: &str) -> FilterBuilder {
+    pub fn new(mut self, key: &str, value: &str) -> FilterBuilder {
         self.inner.push_str(key);
         self.inner.push(':');
         self.inner.push_str(value);
-        self.last_logical_op = LogicalOperations::None;
         self
     }
 
-    pub fn and(mut self) -> FilterBuilder {
+    pub fn and(mut self, key: &str, value: &str) -> FilterBuilder {
         self.inner.push(',');
-        self.last_logical_op = LogicalOperations::And;
+        self.inner.push_str(key);
+        self.inner.push(':');
+        self.inner.push_str(value);
         self
     }
 
-    pub fn or(mut self) -> FilterBuilder {
+    pub fn or(mut self, key: &str, value: &str) -> FilterBuilder {
         self.inner.push('|');
-        self.last_logical_op = LogicalOperations::Or;
+        self.inner.push_str(key);
+        self.inner.push(':');
+        self.inner.push_str(value);
         self
     }
 
-    pub fn build(mut self) -> Filter {
-        if self.last_logical_op != LogicalOperations::None {
-            self.inner.remove(self.inner.len() - 1);
-        }
-
+    pub fn build(self) -> Filter {
         Filter { inner: self.inner }
     }
 }
@@ -65,11 +55,9 @@ mod tests {
     #[test]
     fn filter1() {
         let filter = Filter::builder()
-            .add_filter("institutions.country_code", "fr")
-            .and()
-            .add_filter("institutions.country_code", "gb")
-            .or()
-            .add_filter("institutions.country_code", "de")
+            .new("institutions.country_code", "fr")
+            .and("institutions.country_code", "gb")
+            .or("institutions.country_code", "de")
             .build();
 
         let correct_filter = "institutions.country_code:fr,institutions.country_code:gb|institutions.country_code:de";

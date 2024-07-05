@@ -5,9 +5,8 @@ pub fn main() {
     let _author_response = Author::get_samples(20, "1234").unwrap();
     let _author_response = Author::filter(
         Filter::builder()
-            .add_filter("cited_by_count", ">30")
-            .and()
-            .add_filter("cited_by_count", "<100")
+            .new("cited_by_count", ">30")
+            .new("cited_by_count", "<100")
             .build(),
         1,
         20,

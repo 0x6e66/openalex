@@ -5,9 +5,8 @@ pub fn main() {
     let _works_response = Work::get_samples(20, "1234").unwrap();
     let _works_response = Work::filter(
         Filter::builder()
-            .add_filter("institutions.country_code", "fr")
-            .and()
-            .add_filter("institutions.country_code", "gb")
+            .new("institutions.country_code", "fr")
+            .and("institutions.country_code", "gb")
             .build(),
         1,
         20,
