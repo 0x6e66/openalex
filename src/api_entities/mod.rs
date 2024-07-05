@@ -2,6 +2,7 @@ pub mod author;
 pub mod common_types;
 pub mod institution;
 pub mod source;
+pub mod topic;
 pub mod work;
 
 use reqwest::blocking::{Client, Response};
