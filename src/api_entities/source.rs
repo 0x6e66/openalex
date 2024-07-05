@@ -25,8 +25,8 @@ pub struct SourceIds {
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Society {
-    url: String,
-    organization: String,
+    pub url: String,
+    pub organization: String,
 }
 
 #[derive(Deserialize, Serialize, Debug)]

@@ -15,84 +15,82 @@ use super::{
 #[derive(Deserialize, Serialize, Debug)]
 pub struct AssociatedInstitution {
     #[serde(flatten)]
-    institution: DehydratedInstitution,
-    relationship: String,
+    pub institution: DehydratedInstitution,
+    pub relationship: String,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Geo {
-    city: String,
-    geonames_city_id: Option<String>,
-    region: Option<String>,
-    country_code: Option<String>,
-    country: String,
-    latitude: f32,
-    longitude: f32,
+    pub city: String,
+    pub geonames_city_id: Option<String>,
+    pub region: Option<String>,
+    pub country_code: Option<String>,
+    pub country: String,
+    pub latitude: f32,
+    pub longitude: f32,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct InstitutionIds {
-    openalex: String,
-    ror: String,
-    grid: Option<String>,
-    wikipedia: Option<String>,
-    wikidata: Option<String>,
-    mag: Option<String>,
+    pub openalex: String,
+    pub ror: String,
+    pub grid: Option<String>,
+    pub wikipedia: Option<String>,
+    pub wikidata: Option<String>,
+    pub mag: Option<String>,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct International {
-    display_name: HashMap<String, String>,
+    pub display_name: HashMap<String, String>,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Repository {
-    id: String,
-    display_name: String,
-    host_organization: String,
-    host_organization_name: String,
-    host_organization_lineage: Vec<String>,
+    pub id: String,
+    pub display_name: String,
+    pub host_organization: String,
+    pub host_organization_name: String,
+    pub host_organization_lineage: Vec<String>,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Role {
-    role: String,
-    id: String,
-    works_count: u32,
+    pub role: String,
+    pub id: String,
+    pub works_count: u32,
 }
-
-pub struct InstitutionTopic {}
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Institution {
-    associated_institutions: Vec<AssociatedInstitution>,
-    cited_by_count: u32,
-    country_code: Option<String>,
-    counts_by_year: Vec<CountByYear>,
-    created_date: String,
-    display_name: String,
-    display_name_acronyms: Vec<String>,
-    display_name_alternatives: Vec<String>,
-    geo: Geo,
-    homepage_url: Option<String>,
-    id: String,
-    ids: InstitutionIds,
-    image_thumbnail_url: Option<String>,
-    image_url: Option<String>,
-    international: International,
-    lineage: Vec<String>,
-    repositories: Vec<Repository>,
-    roles: Vec<Role>,
-    ror: String,
-    summary_stats: SummaryStats,
+    pub associated_institutions: Vec<AssociatedInstitution>,
+    pub cited_by_count: u32,
+    pub country_code: Option<String>,
+    pub counts_by_year: Vec<CountByYear>,
+    pub created_date: String,
+    pub display_name: String,
+    pub display_name_acronyms: Vec<String>,
+    pub display_name_alternatives: Vec<String>,
+    pub geo: Geo,
+    pub homepage_url: Option<String>,
+    pub id: String,
+    pub ids: InstitutionIds,
+    pub image_thumbnail_url: Option<String>,
+    pub image_url: Option<String>,
+    pub international: International,
+    pub lineage: Vec<String>,
+    pub repositories: Vec<Repository>,
+    pub roles: Vec<Role>,
+    pub ror: String,
+    pub summary_stats: SummaryStats,
     #[serde(rename = "type")]
-    institution_type: String,
-    updated_date: String,
-    works_api_url: String,
-    works_count: u32,
+    pub institution_type: String,
+    pub updated_date: String,
+    pub works_api_url: String,
+    pub works_count: u32,
 
-    topics: Vec<DehydratedTopic>,
-    topic_share: Vec<DehydratedTopicShare>,
+    pub topics: Vec<DehydratedTopic>,
+    pub topic_share: Vec<DehydratedTopicShare>,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
