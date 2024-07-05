@@ -6,7 +6,7 @@ pub fn main() {
     let _author_response = Author::filter(
         Filter::builder()
             .new("cited_by_count", ">30")
-            .new("cited_by_count", "<100")
+            .and("cited_by_count", "<100")
             .build(),
         1,
         20,
