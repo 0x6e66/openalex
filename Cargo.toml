@@ -1,6 +1,6 @@
 [package]
 name = "openalex"
-version = "0.1.3"
+version = "0.1.4"
 edition = "2021"
 authors = ["Niklas Frondorf <niklas@frondorf.eu>"]
 readme = "README.md"
