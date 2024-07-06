@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use serde_derive::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize, Debug)]
@@ -39,13 +41,13 @@ pub struct Meta {
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct DehydratedInstitution {
-    country_code: String,
-    display_name: String,
-    id: String,
-    lineage: Option<Vec<String>>,
-    ror: String,
+    pub country_code: String,
+    pub display_name: String,
+    pub id: String,
+    pub lineage: Option<Vec<String>>,
+    pub ror: String,
     #[serde(rename = "type")]
-    institution_type: String,
+    pub institution_type: String,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
@@ -55,24 +57,38 @@ pub struct DehydratedAuthor {
     pub orcid: Option<String>,
 }
 
+#[derive(Deserialize, Serialize, Debug)]
+pub struct DehydratedConcept {
+    pub display_name: String,
+    pub id: String,
+    pub level: u32,
+    pub wikidata: Option<String>,
+}
+
+#[derive(Deserialize, Serialize, Debug)]
+pub struct International {
+    pub display_name: HashMap<String, String>,
+}
+
 // not from OA, self created
 #[derive(Deserialize, Serialize, Debug)]
 pub struct DehydratedTopic {
-    id: String,
-    display_name: String,
-    count: u32,
-    subfield: Field,
-    field: Field,
-    domain: Field,
+    pub id: String,
+    pub display_name: String,
+    pub count: u32,
+    pub subfield: Field,
+    pub field: Field,
+    pub domain: Field,
 }
 
 // not from OA, self created
 #[derive(Deserialize, Serialize, Debug)]
 pub struct DehydratedTopicShare {
-    id: String,
-    display_name: String,
-    value: f64,
-    subfield: Field,
-    field: Field,
-    domain: Field,
+    pub id: String,
+    pub display_name: String,
+    pub value: f64,
+    pub subfield: Field,
+    pub field: Field,
+    pub domain: Field,
 }
+

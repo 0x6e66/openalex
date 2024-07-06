@@ -1,13 +1,10 @@
-use std::collections::HashMap;
-
 use serde_derive::{Deserialize, Serialize};
 
 use crate::{impl_try_from_for_entity_response, impl_try_from_for_single_entity};
 
 use super::{
     common_types::{
-        CountByYear, DehydratedInstitution, DehydratedTopic, DehydratedTopicShare, Meta, Role,
-        SummaryStats,
+        CountByYear, DehydratedInstitution, DehydratedTopic, DehydratedTopicShare, International, Meta, Role, SummaryStats
     },
     APIEntity,
 };
@@ -38,11 +35,6 @@ pub struct InstitutionIds {
     pub wikipedia: Option<String>,
     pub wikidata: Option<String>,
     pub mag: Option<String>,
-}
-
-#[derive(Deserialize, Serialize, Debug)]
-pub struct International {
-    pub display_name: HashMap<String, String>,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
