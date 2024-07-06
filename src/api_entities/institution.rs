@@ -1,13 +1,14 @@
 use serde_derive::{Deserialize, Serialize};
 
-use crate::{impl_try_from_for_entity_response, impl_try_from_for_single_entity};
-
-use super::{
-    common_types::{
-        CountByYear, DehydratedInstitution, DehydratedTopic, DehydratedTopicShare, International,
-        Meta, Role, SummaryStats,
+use crate::{
+    api_entities::{
+        common_types::{
+            CountByYear, DehydratedInstitution, DehydratedTopic, DehydratedTopicShare,
+            International, Meta, Role, SummaryStats,
+        },
+        APIEntity,
     },
-    APIEntity,
+    impl_try_from_for_entity_response, impl_try_from_for_single_entity,
 };
 
 #[derive(Deserialize, Serialize, Debug)]

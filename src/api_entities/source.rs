@@ -1,13 +1,12 @@
 use serde_derive::{Deserialize, Serialize};
 
 use crate::{
+    api_entities::{
+        common_types::{CountByYear, Meta, SummaryStats},
+        APIEntity,
+    },
     impl_try_from_for_entity_response, impl_try_from_for_single_entity,
     utils::deserialize_null_default,
-};
-
-use super::{
-    common_types::{CountByYear, Meta, SummaryStats},
-    APIEntity,
 };
 
 #[derive(Deserialize, Serialize, Debug)]

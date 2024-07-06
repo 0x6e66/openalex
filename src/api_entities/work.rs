@@ -2,13 +2,12 @@ use serde_derive::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 use crate::{
+    api_entities::{
+        common_types::{DehydratedAuthor, DehydratedInstitution, DehydratedSource, Field, Meta},
+        APIEntity,
+    },
     impl_try_from_for_entity_response, impl_try_from_for_single_entity,
     utils::deserialize_null_default,
-};
-
-use super::{
-    common_types::{DehydratedAuthor, DehydratedInstitution, DehydratedSource, Field, Meta},
-    APIEntity,
 };
 
 #[derive(Deserialize, Serialize, Debug)]

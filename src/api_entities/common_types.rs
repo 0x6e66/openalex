@@ -1,6 +1,5 @@
-use std::collections::HashMap;
-
 use serde_derive::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 use crate::utils::deserialize_null_default;
 
