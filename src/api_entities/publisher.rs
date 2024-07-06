@@ -9,31 +9,31 @@ use super::{
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct PublisherIds {
-    openalex: String,
-    ror: Option<String>,
-    wikidata: Option<String>,
+    pub openalex: String,
+    pub ror: Option<String>,
+    pub wikidata: Option<String>,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Publisher {
-    alternate_titles: Vec<String>,
-    cited_by_count: u32,
-    country_codes: Vec<String>,
-    counts_by_year: Vec<CountByYear>,
-    created_date: String,
-    display_name: String,
-    hierarchy_level: u32,
-    id: String,
-    ids: PublisherIds,
-    image_thumbnail_url: Option<String>,
-    image_url: Option<String>,
-    lineage: Vec<String>,
-    parent_publisher: Option<Field>,
-    roles: Vec<Role>,
-    sources_api_url: String,
-    summary_stats: SummaryStats,
-    updated_date: String,
-    works_count: u32,
+    pub alternate_titles: Vec<String>,
+    pub cited_by_count: u32,
+    pub country_codes: Vec<String>,
+    pub counts_by_year: Vec<CountByYear>,
+    pub created_date: String,
+    pub display_name: String,
+    pub hierarchy_level: u32,
+    pub id: String,
+    pub ids: PublisherIds,
+    pub image_thumbnail_url: Option<String>,
+    pub image_url: Option<String>,
+    pub lineage: Vec<String>,
+    pub parent_publisher: Option<Field>,
+    pub roles: Vec<Role>,
+    pub sources_api_url: String,
+    pub summary_stats: SummaryStats,
+    pub updated_date: String,
+    pub works_count: u32,
 }
 
 #[derive(Deserialize, Serialize, Debug)]

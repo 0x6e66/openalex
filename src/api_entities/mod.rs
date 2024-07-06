@@ -1,8 +1,8 @@
 pub mod author;
-pub mod funder;
 pub mod common_types;
-pub mod institution;
 pub mod concept;
+pub mod funder;
+pub mod institution;
 pub mod keyword;
 pub mod publisher;
 pub mod source;

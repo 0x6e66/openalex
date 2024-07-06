@@ -2,7 +2,10 @@ use serde_derive::{Deserialize, Serialize};
 
 use crate::{impl_try_from_for_entity_response, impl_try_from_for_single_entity};
 
-use super::{common_types::{CountByYear, DehydratedConcept, International, Meta, SummaryStats}, APIEntity};
+use super::{
+    common_types::{CountByYear, DehydratedConcept, International, Meta, SummaryStats},
+    APIEntity,
+};
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct ConceptIds {
@@ -17,24 +20,24 @@ pub struct ConceptIds {
 /// Note from OpenAlex: https://docs.openalex.org/api-entities/concepts
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Concept {
-    ancestors: Vec<DehydratedConcept>,
-    cited_by_count: u32,
-    counts_by_year: Vec<CountByYear>,
-    created_date: String,
-    description: Option<String>,
-    display_name: String,
-    id: String,
-    ids: ConceptIds,
-    image_thumbnail_url: Option<String>,
-    image_url: Option<String>,
-    international: International,
-    level: u32,
-    related_concepts: Vec<DehydratedConcept>,
-    summary_stats: SummaryStats,
-    updated_date: String,
-    wikidata: String,
-    works_api_url: String,
-    works_count: u32,
+    pub ancestors: Vec<DehydratedConcept>,
+    pub cited_by_count: u32,
+    pub counts_by_year: Vec<CountByYear>,
+    pub created_date: String,
+    pub description: Option<String>,
+    pub display_name: String,
+    pub id: String,
+    pub ids: ConceptIds,
+    pub image_thumbnail_url: Option<String>,
+    pub image_url: Option<String>,
+    pub international: International,
+    pub level: u32,
+    pub related_concepts: Vec<DehydratedConcept>,
+    pub summary_stats: SummaryStats,
+    pub updated_date: String,
+    pub wikidata: String,
+    pub works_api_url: String,
+    pub works_count: u32,
 }
 
 #[derive(Deserialize, Serialize, Debug)]

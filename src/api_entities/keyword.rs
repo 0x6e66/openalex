@@ -6,12 +6,12 @@ use super::{common_types::Meta, APIEntity};
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Keyword {
-    cited_by_count: u32,
-    created_date: String,
-    display_name: String,
-    id: String,
-    updated_date: String,
-    works_count: u32,
+    pub cited_by_count: u32,
+    pub created_date: String,
+    pub display_name: String,
+    pub id: String,
+    pub updated_date: String,
+    pub works_count: u32,
 }
 
 #[derive(Deserialize, Serialize, Debug)]

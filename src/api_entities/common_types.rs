@@ -91,4 +91,3 @@ pub struct DehydratedTopicShare {
     pub field: Field,
     pub domain: Field,
 }
-

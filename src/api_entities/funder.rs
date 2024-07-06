@@ -2,7 +2,10 @@ use serde_derive::{Deserialize, Serialize};
 
 use crate::{impl_try_from_for_entity_response, impl_try_from_for_single_entity};
 
-use super::{common_types::{CountByYear, Meta, Role, SummaryStats}, APIEntity};
+use super::{
+    common_types::{CountByYear, Meta, Role, SummaryStats},
+    APIEntity,
+};
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct FunderIds {
