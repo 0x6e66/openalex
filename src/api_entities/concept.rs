@@ -11,8 +11,10 @@ use super::{
 pub struct ConceptIds {
     pub mag: String,
     pub openalex: String,
-    pub umls_cui: Option<Vec<String>>,
-    pub umls_aui: Option<Vec<String>>,
+    #[serde(default)]
+    pub umls_cui: Vec<String>,
+    #[serde(default)]
+    pub umls_aui: Vec<String>,
     pub wikidata: String,
     pub wikipedia: Option<String>,
 }

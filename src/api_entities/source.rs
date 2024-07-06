@@ -1,6 +1,9 @@
 use serde_derive::{Deserialize, Serialize};
 
-use crate::{impl_try_from_for_entity_response, impl_try_from_for_single_entity};
+use crate::{
+    impl_try_from_for_entity_response, impl_try_from_for_single_entity,
+    utils::deserialize_null_default,
+};
 
 use super::{
     common_types::{CountByYear, Meta, SummaryStats},
@@ -16,7 +19,8 @@ pub struct APCPrice {
 #[derive(Deserialize, Serialize, Debug)]
 pub struct SourceIds {
     pub fatcat: Option<String>,
-    pub issn: Option<Vec<String>>,
+    #[serde(default)]
+    pub issn: Vec<String>,
     pub issn_l: Option<String>,
     pub mag: Option<String>,
     pub openalex: String,
@@ -32,8 +36,10 @@ pub struct Society {
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Source {
     pub abbreviated_title: Option<String>,
-    pub alternate_titles: Option<Vec<String>>,
-    pub apc_prices: Option<Vec<APCPrice>>,
+    #[serde(deserialize_with = "deserialize_null_default")]
+    pub alternate_titles: Vec<String>,
+    #[serde(deserialize_with = "deserialize_null_default")]
+    pub apc_prices: Vec<APCPrice>,
     pub apc_usd: Option<u32>,
     pub cited_by_count: u32,
     pub country_code: Option<String>,
@@ -48,9 +54,11 @@ pub struct Source {
     pub ids: SourceIds,
     pub is_in_doaj: bool,
     pub is_oa: bool,
-    pub issn: Option<Vec<String>>,
+    #[serde(deserialize_with = "deserialize_null_default")]
+    pub issn: Vec<String>,
     pub issn_l: Option<String>,
-    pub societies: Option<Vec<Society>>,
+    #[serde(deserialize_with = "deserialize_null_default")]
+    pub societies: Vec<Society>,
     pub summary_stats: SummaryStats,
     #[serde(rename = "type")]
     pub source_type: String,

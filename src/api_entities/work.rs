@@ -1,10 +1,13 @@
 use serde_derive::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-use crate::{impl_try_from_for_entity_response, impl_try_from_for_single_entity};
+use crate::{
+    impl_try_from_for_entity_response, impl_try_from_for_single_entity,
+    utils::deserialize_null_default,
+};
 
 use super::{
-    common_types::{DehydratedAuthor, DehydratedInstitution, Field, Meta},
+    common_types::{DehydratedAuthor, DehydratedInstitution, DehydratedSource, Field, Meta},
     APIEntity,
 };
 
@@ -17,27 +20,19 @@ pub struct WorkIds {
 }
 
 #[derive(Deserialize, Serialize, Debug)]
-pub struct WorkSource {
-    pub id: String,
-    pub display_name: String,
-    pub issn_l: Option<String>,
-    pub issn: Option<Vec<String>>,
-    pub host_organization: Option<String>,
-    #[serde(rename = "type")]
-    pub source_type: String,
-}
-
-#[derive(Deserialize, Serialize, Debug)]
 pub struct Location {
+    #[serde(default)]
+    pub is_accepted: bool,
     pub is_oa: bool,
+    #[serde(default)]
+    pub is_published: bool,
     pub landing_page_url: Option<String>,
-    pub pdf_url: Option<String>,
-    pub source: Option<WorkSource>,
     pub license: Option<String>,
-    pub license_id: Option<String>,
+    pub source: Option<DehydratedSource>,
+    pub pdf_url: Option<String>,
     pub version: Option<String>,
-    // pub is_accepted: bool,
-    // pub is_published: bool,
+
+    pub license_id: Option<String>,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
@@ -127,7 +122,8 @@ pub struct CitedByPercentileYear {
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Work {
-    pub abstract_inverted_index: Option<HashMap<String, Vec<u32>>>,
+    #[serde(deserialize_with = "deserialize_null_default")]
+    pub abstract_inverted_index: HashMap<String, Vec<u32>>,
     pub authorships: Vec<Authorship>,
     pub apc_list: Option<APC>,
     pub apc_paid: Option<APC>,
@@ -182,14 +178,12 @@ pub struct Work {
 impl Work {
     pub fn get_abstract(&self) -> String {
         let mut res: Vec<&str> = vec![];
-        if let Some(aii) = &self.abstract_inverted_index {
-            for (s, positions) in aii.iter() {
-                for pos in positions {
-                    while res.len() <= (*pos as usize) {
-                        res.push("");
-                    }
-                    res[*pos as usize] = s;
+        for (s, positions) in self.abstract_inverted_index.iter() {
+            for pos in positions {
+                while res.len() <= (*pos as usize) {
+                    res.push("");
                 }
+                res[*pos as usize] = s;
             }
         }
 

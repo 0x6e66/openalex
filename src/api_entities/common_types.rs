@@ -2,6 +2,8 @@ use std::collections::HashMap;
 
 use serde_derive::{Deserialize, Serialize};
 
+use crate::utils::deserialize_null_default;
+
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Field {
     pub id: String,
@@ -44,7 +46,8 @@ pub struct DehydratedInstitution {
     pub country_code: String,
     pub display_name: String,
     pub id: String,
-    pub lineage: Option<Vec<String>>,
+    #[serde(default)]
+    pub lineage: Vec<String>,
     pub ror: String,
     #[serde(rename = "type")]
     pub institution_type: String,
@@ -63,6 +66,22 @@ pub struct DehydratedConcept {
     pub id: String,
     pub level: u32,
     pub wikidata: Option<String>,
+}
+
+#[derive(Deserialize, Serialize, Debug)]
+pub struct DehydratedSource {
+    pub display_name: String,
+    pub host_organization: Option<String>,
+    pub host_organization_lineage: Vec<String>,
+    pub host_organization_name: Option<String>,
+    pub id: String,
+    pub is_in_doaj: bool,
+    pub is_oa: bool,
+    #[serde(deserialize_with = "deserialize_null_default")]
+    pub issn: Vec<String>,
+    pub issn_l: Option<String>,
+    #[serde(rename = "type")]
+    pub source_type: String,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
