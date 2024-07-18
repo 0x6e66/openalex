@@ -8,7 +8,7 @@ use crate::{
         },
         APIEntity,
     },
-    impl_try_from_for_entity_response, impl_try_from_for_single_entity,
+    impl_try_from_for_entity_response, impl_try_from_for_single_entity, utils::deserialize_opt_int_to_opt_string,
 };
 
 #[derive(Deserialize, Serialize, Debug)]
@@ -36,6 +36,7 @@ pub struct InstitutionIds {
     pub grid: Option<String>,
     pub wikipedia: Option<String>,
     pub wikidata: Option<String>,
+    #[serde(deserialize_with = "deserialize_opt_int_to_opt_string")]
     pub mag: Option<String>,
 }
 

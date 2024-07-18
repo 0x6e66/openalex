@@ -6,7 +6,7 @@ use crate::{
         APIEntity,
     },
     impl_try_from_for_entity_response, impl_try_from_for_single_entity,
-    utils::deserialize_null_default,
+    utils::{deserialize_null_default, deserialize_opt_int_to_opt_string},
 };
 
 #[derive(Deserialize, Serialize, Debug)]
@@ -21,6 +21,7 @@ pub struct SourceIds {
     #[serde(default)]
     pub issn: Vec<String>,
     pub issn_l: Option<String>,
+    #[serde(deserialize_with = "deserialize_opt_int_to_opt_string")]
     pub mag: Option<String>,
     pub openalex: String,
     pub wikidata: Option<String>,

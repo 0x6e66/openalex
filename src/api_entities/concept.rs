@@ -5,12 +5,13 @@ use crate::{
         common_types::{CountByYear, DehydratedConcept, International, Meta, SummaryStats},
         APIEntity,
     },
-    impl_try_from_for_entity_response, impl_try_from_for_single_entity,
+    impl_try_from_for_entity_response, impl_try_from_for_single_entity, utils::deserialize_opt_int_to_opt_string,
 };
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct ConceptIds {
-    pub mag: String,
+    #[serde(deserialize_with = "deserialize_opt_int_to_opt_string")]
+    pub mag: Option<String>,
     pub openalex: String,
     #[serde(default)]
     pub umls_cui: Vec<String>,
