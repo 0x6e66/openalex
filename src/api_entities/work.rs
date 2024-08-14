@@ -7,14 +7,17 @@ use crate::{
         APIEntity,
     },
     impl_try_from_for_entity_response, impl_try_from_for_single_entity,
-    utils::{deserialize_null_default, deserialize_opt_int_to_opt_string},
+    utils::{deserialize_null_default, deserialize_opt_string_from_uint_null_missing},
 };
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct WorkIds {
     pub openalex: String,
     pub doi: Option<String>,
-    #[serde(deserialize_with = "deserialize_opt_int_to_opt_string")]
+    #[serde(
+        default,
+        deserialize_with = "deserialize_opt_string_from_uint_null_missing"
+    )]
     pub mag: Option<String>,
     pub pmid: Option<String>,
 }
@@ -154,7 +157,7 @@ pub struct Work {
     pub locations: Vec<Location>,
     pub locations_count: u32,
     pub mesh: Vec<MeshTag>,
-    pub ngrams_url: String,
+    pub ngrams_url: Option<String>,
     pub open_access: OpenAccess,
     pub primary_location: Option<Location>,
     pub primary_topic: Option<WorkTopic>,

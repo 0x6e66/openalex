@@ -42,7 +42,7 @@ pub struct Meta {
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct DehydratedInstitution {
-    pub country_code: String,
+    pub country_code: Option<String>,
     pub display_name: String,
     pub id: String,
     #[serde(default)]
@@ -54,7 +54,7 @@ pub struct DehydratedInstitution {
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct DehydratedAuthor {
-    pub id: String,
+    pub id: Option<String>,
     pub display_name: String,
     pub orcid: Option<String>,
 }
@@ -80,7 +80,7 @@ pub struct DehydratedSource {
     pub issn: Vec<String>,
     pub issn_l: Option<String>,
     #[serde(rename = "type")]
-    pub source_type: String,
+    pub source_type: Option<String>,
 }
 
 #[derive(Deserialize, Serialize, Debug)]

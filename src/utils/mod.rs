@@ -1,4 +1,4 @@
-use std::fmt;
+use std::{fmt, marker::PhantomData};
 
 use serde::{
     de::{self, Visitor},
@@ -17,33 +17,56 @@ where
     Ok(opt.unwrap_or_default())
 }
 
-pub fn deserialize_opt_int_to_opt_string<'de, D>(deserializer: D) -> Result<Option<String>, D::Error>
+pub fn deserialize_opt_string_from_uint_null_missing<'de, D>(
+    deserializer: D,
+) -> Result<Option<String>, D::Error>
 where
     D: Deserializer<'de>,
 {
-    struct MagVisitor;
+    struct Inner(PhantomData<fn() -> Option<String>>);
 
-    impl<'de> Visitor<'de> for MagVisitor {
+    impl<'de> Visitor<'de> for Inner {
         type Value = Option<String>;
 
-        fn expecting(&self, f: &mut fmt::Formatter) -> fmt::Result {
-            f.write_str("'mag' as a number or string")
+        fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+            formatter.write_str("ERROR")
         }
 
-        fn visit_u64<E>(self, id: u64) -> Result<Self::Value, E>
+        fn visit_str<E>(self, v: &str) -> Result<Self::Value, E>
         where
             E: de::Error,
         {
-            Ok(Some(id.to_string()))
+            Ok(Some(v.to_owned()))
         }
 
-        fn visit_str<E>(self, id: &str) -> Result<Self::Value, E>
+        fn visit_u64<E>(self, v: u64) -> Result<Self::Value, E>
         where
             E: de::Error,
         {
-            Ok(Some(id.to_owned()))
+            Ok(Some(v.to_string()))
+        }
+
+        fn visit_u128<E>(self, v: u128) -> Result<Self::Value, E>
+        where
+            E: de::Error,
+        {
+            Ok(Some(v.to_string()))
+        }
+
+        fn visit_none<E>(self) -> Result<Self::Value, E>
+        where
+            E: de::Error,
+        {
+            Ok(None)
+        }
+
+        fn visit_unit<E>(self) -> Result<Self::Value, E>
+        where
+            E: de::Error,
+        {
+            Ok(None)
         }
     }
 
-    deserializer.deserialize_any(MagVisitor)
+    deserializer.deserialize_any(Inner(PhantomData))
 }
